@@ -12,4 +12,12 @@ interface ReducerState {
 }
 
 
-export { ReducersAction, ReducerState };
+type AuthState = {
+    loading: boolean;
+    isAuthenticated: boolean;
+    user: object | null;
+
+}
+
+
+export { ReducersAction, ReducerState, AuthState };

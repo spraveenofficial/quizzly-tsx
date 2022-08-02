@@ -5,6 +5,9 @@ import { motion } from "framer-motion"
 import animation from "../../Helpers/animation";
 import { Link } from "react-router-dom";
 import { signupValidate } from "../../Helpers/validate";
+import { useSelector } from "react-redux";
+import { useTypedDispatch } from "../../Redux/Store";
+import { registerUser } from "../../Redux/Actions";
 
 const Signup = (): JSX.Element => {
     type UserInput = {
@@ -13,13 +16,6 @@ const Signup = (): JSX.Element => {
         password: string;
         checkbox: boolean;
     }
-
-    type DummyReducer = {
-        loading: boolean;
-        message: string;
-        success: boolean
-    }
-
     interface Errors {
         error: boolean;
         message: string;
@@ -32,8 +28,9 @@ const Signup = (): JSX.Element => {
         checkbox: false,
     });
 
-    const [dummyReducer, setDummyReducer] = useState<DummyReducer>({ loading: false, message: "", success: false });
-    const { loading, message, success } = dummyReducer;
+    
+    const dispatch = useTypedDispatch()
+    const { loading, message, success } = useSelector((state: any) => state.register)
     const [errors, setError] = useState<Errors[]>([]);
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setInputItem({ ...inputItem, [e.target.name]: e.target.value });
@@ -44,16 +41,12 @@ const Signup = (): JSX.Element => {
         e.preventDefault();
         const resultOfValidation = signupValidate(inputItem);
         setError(resultOfValidation);
-        if (resultOfValidation.length > 0) return;
-        if (resultOfValidation.length === 0) {
-            setDummyReducer({ ...dummyReducer, loading: true });
-            setTimeout(() => {
-                setDummyReducer({ ...dummyReducer, loading: false, success: true, message: "Signup Successful" });
-            }, 2000);
-        }
+        const isAnyError = resultOfValidation.some((error: Errors) => error.error);
+        if (isAnyError) return;
+        dispatch(registerUser(inputItem))
     }
 
-    
+
     return (
         <Container>
             <Helmet>
@@ -119,7 +112,6 @@ const Signup = (): JSX.Element => {
                             </div>
                         </div>
                         <button
-                            // onClick={handleSubmit}
                             type="submit"
                             className="btn full-width mt-10 inherit-font loading-btn"
                         >
