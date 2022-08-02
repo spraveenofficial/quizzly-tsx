@@ -2,14 +2,14 @@ import { Container, Input, Loader, Toast } from "../../Components"
 import { Helmet } from "react-helmet-async"
 import { motion } from "framer-motion"
 import animation from "../../Helpers/animation"
-import React, { useState } from "react"
-import { Link } from "react-router-dom"
+import React, { useEffect, useState } from "react"
+import { Link, useLocation, useNavigate } from "react-router-dom"
 import "./style.css"
 import { loginValidate } from "../../Helpers/validate"
 import { useSelector } from "react-redux"
-import { loginUser } from "../../Redux/Actions"
+import { loadUser, loginUser } from "../../Redux/Actions"
 import { useTypedDispatch } from "../../Redux/Store"
-
+import { LocationState } from "../../Types/type" 
 
 const Login = (): JSX.Element => {
 
@@ -24,6 +24,9 @@ const Login = (): JSX.Element => {
     }
 
     const dispatch = useTypedDispatch();
+    const navigate = useNavigate();
+    const location = useLocation();
+    const { from } = location.state as LocationState || { from: { pathname: "/" } };
     const [userInput, setUserInput] = useState<UserInput>({ email: "", password: "" });
     const { loading, success, message } = useSelector((state: any) => state.login)
     const [errors, setError] = useState<Errors[]>([]);
@@ -41,6 +44,12 @@ const Login = (): JSX.Element => {
         dispatch(loginUser(userInput))
     }
 
+    useEffect(() => {
+        if (success) {
+            dispatch(loadUser());
+            navigate(from?.path || "/");
+        }
+    }, [success])
 
     return (
         <Container>

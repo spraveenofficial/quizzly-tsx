@@ -39,10 +39,10 @@ export const register = (state: ReducerState = { loading: false, success: false,
 }
 
 
-export const auth = (state: AuthState = { isAuthenticated: false, loading: true, user: null }, action: ReducersAction) => {
+export const auth = (state: AuthState = { isAuthenticated: false, loading: localStorage.getItem('token') ? true : false, user: null }, action: ReducersAction) => {
     switch (action.type) {
         case USER_LOAD_REQUEST:
-            return {...state, loading: true} ;
+            return { ...state, loading: true };
         case USER_LOAD_SUCCESS:
             return { isAuthenticated: true, loading: false, user: action.payload };
         case USER_LOAD_FAILURE:

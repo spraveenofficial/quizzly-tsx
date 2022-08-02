@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Container, Input, Loader, Toast } from "../../Components"
 import { motion } from "framer-motion"
 import animation from "../../Helpers/animation";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { signupValidate } from "../../Helpers/validate";
 import { useSelector } from "react-redux";
 import { useTypedDispatch } from "../../Redux/Store";
-import { registerUser } from "../../Redux/Actions";
+import { loadUser, registerUser } from "../../Redux/Actions";
+import { LocationState } from "../../Types/type"
 
 const Signup = (): JSX.Element => {
     type UserInput = {
@@ -21,6 +22,7 @@ const Signup = (): JSX.Element => {
         message: string;
         success: boolean;
     }
+
     const [inputItem, setInputItem] = useState<UserInput>({
         name: "",
         email: "",
@@ -28,8 +30,11 @@ const Signup = (): JSX.Element => {
         checkbox: false,
     });
 
-    
+
     const dispatch = useTypedDispatch()
+    const navigate = useNavigate();
+    const location = useLocation();
+    const { from } = location.state as LocationState || { from: { pathname: "/" } };
     const { loading, message, success } = useSelector((state: any) => state.register)
     const [errors, setError] = useState<Errors[]>([]);
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,6 +50,12 @@ const Signup = (): JSX.Element => {
         if (isAnyError) return;
         dispatch(registerUser(inputItem))
     }
+    useEffect(() => {
+        if (success) {
+            dispatch(loadUser());
+            navigate(from?.path || "/");
+        }
+    }, [success])
 
 
     return (

@@ -3,21 +3,25 @@ import { useState, useEffect } from "react";
 import { Hamburger } from '..';
 import { Link, useNavigate } from "react-router-dom";
 import "./style.css";
+import { useSelector } from "react-redux";
+import { handleLogout as logout } from "../../Redux/Actions";
+import { navbarAnimation } from "../../Helpers/animation";
+import { useTypedDispatch } from "../../Redux/Store";
 
 
 const Navbar = (): JSX.Element => {
     interface UserType {
-        id: number,
-        name: string,
-        email: string,
-        password: string,
-        created_at: string,
+        isAuthenticated: boolean;
+        user: {
+            name: string;
+            email: string;
+            isAdmin: boolean;
+        }
     }
-    // initialize new state with type of string
-    const [deviceType, setDeviceType] = useState<string>("desktop");
     const navigate = useNavigate();
-    const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-    const [user, setUser] = useState<UserType>({ id: 1, name: "", email: "", password: "", created_at: "" })
+    const dispatch = useTypedDispatch()
+    const [deviceType, setDeviceType] = useState<string>("desktop");
+    const { isAuthenticated, user }: UserType = useSelector((state: any) => state.auth);
     const [showNav, setNav] = useState<boolean>(false);
     const updateDeviceType = (width: Number) => {
         if (width >= 768) {
@@ -40,22 +44,9 @@ const Navbar = (): JSX.Element => {
             });
         };
     });
-    const pushToHome = () => {
-        navigate("/");
-    };
-    const navVariants = {
-        hidden: { y: -10, opacity: 0 },
-        show: {
-            y: 0,
-            opacity: 1,
-            transition: {
-                delay: 0.3,
-                duration: 1,
-                type: "tween",
-                staggerChildren: 0.5,
-            },
-        },
-    };
+    const pushToHome = () => navigate("/");
+    const handleLogout = () => dispatch(logout());
+
     return (
         <>
             <AnimatePresence>
@@ -63,7 +54,7 @@ const Navbar = (): JSX.Element => {
                     <motion.nav
                         initial="hidden"
                         animate="show"
-                        variants={navVariants}
+                        variants={navbarAnimation}
                         exit="hidden"
                         className={`${deviceType === "mobile" ? "mobile-nav" : ""}`}
                     >
@@ -81,10 +72,10 @@ const Navbar = (): JSX.Element => {
                                         {isAuthenticated ? (
                                             <p>
                                                 <Link to={"/profile"}>{user.name}</Link>,{" "}
-                                                {/* <span onClick={() => handleLogout()}>
+                                                <span onClick={() => handleLogout()}>
                                                     {" "}
                                                     &nbsp; Logout?
-                                                </span> */}
+                                                </span>
                                             </p>
                                         ) : (
                                             <Link to={"/login"}>Login</Link>

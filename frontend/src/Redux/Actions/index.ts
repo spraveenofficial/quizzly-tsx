@@ -1,1 +1,1 @@
-export { loginUser, registerUser, loadUser } from './auth.actions';
+export { loginUser, registerUser, loadUser, handleLogout } from './auth.actions';

@@ -15,7 +15,11 @@ interface ReducerState {
 type AuthState = {
     loading: boolean;
     isAuthenticated: boolean;
-    user: object | null;
+    user: {
+        name: string;
+        email: string;
+        isAdmin: boolean;
+    } | null;
 
 }
 

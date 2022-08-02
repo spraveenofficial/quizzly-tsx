@@ -8,6 +8,7 @@ import {
     USER_LOAD_REQUEST,
     USER_LOAD_SUCCESS,
     USER_LOAD_FAILURE,
+    USER_LOGOUT
 } from "../Constants/auth.constant";
 
 
@@ -88,6 +89,7 @@ export const registerUser = (payload: UserInput) => async (dispatch: any) => {
     }
 }
 
+
 export const loadUser = () => async (dispatch: any) => {
     try {
         dispatch({
@@ -111,4 +113,13 @@ export const loadUser = () => async (dispatch: any) => {
             type: USER_LOAD_FAILURE,
         });
     }
+
 };
+
+export const handleLogout = () => (dispatch: any) => {
+    console.log("loggedout")
+    dispatch({
+        type: USER_LOGOUT,
+    });
+    return localStorage.removeItem("token");
+}
