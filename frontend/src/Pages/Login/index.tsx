@@ -6,6 +6,9 @@ import React, { useState } from "react"
 import { Link } from "react-router-dom"
 import "./style.css"
 import { loginValidate } from "../../Helpers/validate"
+import { useSelector } from "react-redux"
+import { loginUser } from "../../Redux/Actions"
+import { useTypedDispatch } from "../../Redux/Store"
 
 
 const Login = (): JSX.Element => {
@@ -14,21 +17,15 @@ const Login = (): JSX.Element => {
         email: string;
         password: string;
     }
-
-    type DummyReducer = {
-        loading: boolean;
-        message: string;
-        success: boolean
-
-    }
     interface Errors {
         error: boolean;
         message: string;
         success: boolean;
     }
+
+    const dispatch = useTypedDispatch();
     const [userInput, setUserInput] = useState<UserInput>({ email: "", password: "" });
-    const [dummyReducer, setDummyReducer] = useState<DummyReducer>({ loading: false, message: "", success: false });
-    const { loading, message, success } = dummyReducer;
+    const { loading, success, message } = useSelector((state: any) => state.login)
     const [errors, setError] = useState<Errors[]>([]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -39,16 +36,12 @@ const Login = (): JSX.Element => {
         e.preventDefault();
         const resultOfValidation = loginValidate(userInput);
         setError(resultOfValidation);
-        // if (resultOfValidation.length > 0) return;
-        if (resultOfValidation.length === 0) {
-            setDummyReducer({ ...dummyReducer, loading: true });
-            setTimeout(() => {
-                setDummyReducer({ ...dummyReducer, loading: false, success: true, message: "Signup Successful" });
-            }, 2000);
-        }
+        const isAnyError = resultOfValidation.some((error: Errors) => error.error);
+        if (isAnyError) return;
+        dispatch(loginUser(userInput))
     }
 
-    
+
     return (
         <Container>
             <Helmet>
