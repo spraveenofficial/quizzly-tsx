@@ -1,45 +1,50 @@
+import React, { useState } from "react";
+import { Helmet } from "react-helmet-async";
 import { Container, Input, Loader, Toast } from "../../Components"
-import { Helmet } from "react-helmet-async"
 import { motion } from "framer-motion"
-import animation from "../../Helpers/animation"
-import React, { useState } from "react"
-import { Link } from "react-router-dom"
-import "./style.css"
-import { loginValidate } from "../../Helpers/validate"
+import animation from "../../Helpers/animation";
+import { Link } from "react-router-dom";
+import { signupValidate } from "../../Helpers/validate";
 
-
-const Login = (): JSX.Element => {
-
+const Signup = (): JSX.Element => {
     type UserInput = {
+        name: string;
         email: string;
         password: string;
+        checkbox: boolean;
     }
 
     type DummyReducer = {
         loading: boolean;
         message: string;
         success: boolean
-
     }
+
     interface Errors {
         error: boolean;
         message: string;
         success: boolean;
     }
-    const [userInput, setUserInput] = useState<UserInput>({ email: "", password: "" });
+    const [inputItem, setInputItem] = useState<UserInput>({
+        name: "",
+        email: "",
+        password: "",
+        checkbox: false,
+    });
+
     const [dummyReducer, setDummyReducer] = useState<DummyReducer>({ loading: false, message: "", success: false });
     const { loading, message, success } = dummyReducer;
     const [errors, setError] = useState<Errors[]>([]);
-
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setUserInput({ ...userInput, [e.target.name]: e.target.value });
+        setInputItem({ ...inputItem, [e.target.name]: e.target.value });
     };
+
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        const resultOfValidation = loginValidate(userInput);
+        const resultOfValidation = signupValidate(inputItem);
         setError(resultOfValidation);
-        // if (resultOfValidation.length > 0) return;
+        if (resultOfValidation.length > 0) return;
         if (resultOfValidation.length === 0) {
             setDummyReducer({ ...dummyReducer, loading: true });
             setTimeout(() => {
@@ -53,7 +58,7 @@ const Login = (): JSX.Element => {
         <Container>
             <Helmet>
                 <meta charSet="utf-8" />
-                <title>Login - Quizzly</title>
+                <title>Signup - Quizzly</title>
             </Helmet>
             <motion.div
                 initial="hidden"
@@ -63,13 +68,23 @@ const Login = (): JSX.Element => {
                 className="logincontainer"
             >
                 <motion.div className="logincard">
-                    <h1 className="text-center">Login 👋</h1>
-                    <form onSubmit={handleSubmit} >
+                    <h1 className="text-center">Sign Up 👋</h1>
+                    <form onSubmit={handleSubmit}>
+                        <Input
+                            error={errors[0]?.error}
+                            type="text"
+                            success={errors[0]?.success}
+                            label={"Enter Name"}
+                            errorMessage={errors[0]?.message}
+                            placeholder="John doe"
+                            name="name"
+                            onChange={handleChange}
+                        />
                         <Input
                             type="email"
-                            error={errors[0]?.error}
-                            success={errors[0]?.success}
-                            errorMessage={errors[0]?.message}
+                            error={errors[1]?.error}
+                            success={errors[1]?.success}
+                            errorMessage={errors[1]?.message}
                             label={"Enter Email"}
                             placeholder="test@gmail.com"
                             name="email"
@@ -77,16 +92,15 @@ const Login = (): JSX.Element => {
                         />
                         <Input
                             type="password"
-                            error={errors[1]?.error}
-                            success={errors[1]?.success}
-                            errorMessage={errors[1]?.message}
+                            error={errors[2]?.error}
+                            success={errors[2]?.success}
+                            errorMessage={errors[2]?.message}
                             label={"Enter Password"}
                             placeholder="***********"
                             name="password"
                             onChange={handleChange}
-                            autoComplete="new-password"
                         />
-                        <div className="remember-options flex justify-between">
+                        <div className="remember-options">
                             <div className="remember">
                                 <input
                                     type="checkbox"
@@ -94,26 +108,26 @@ const Login = (): JSX.Element => {
                                     name="checkbox"
                                     value="true"
                                     className="checkbox"
+                                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                                        handleChange(e);
+                                    }}
                                 />
-                                <label htmlFor="checkbox">Remember Me</label>
+                                <label htmlFor="checkbox">
+                                    I agree, all the terms & conditions.
+                                </label>
                                 <br />
-                            </div>
-                            <div className="forgot-passwor">
-                                <Link to="/forget">
-                                    <p>Forgot Password?</p>
-                                </Link>
                             </div>
                         </div>
                         <button
+                            // onClick={handleSubmit}
                             type="submit"
                             className="btn full-width mt-10 inherit-font loading-btn"
                         >
-                            {loading && <Loader />} Login Now
+                            {loading && <Loader />}Signup Now
                         </button>
                         <p className="text-center mt-10 text-white">
-                            New User? <Link to="/signup">Signup Now</Link>{" "}
+                            Already Registered? <Link to="/login">Login Now</Link>{" "}
                         </p>
-
                     </form>
                 </motion.div>
                 {message && <Toast message={message} success={success} />}
@@ -122,4 +136,4 @@ const Login = (): JSX.Element => {
     )
 }
 
-export { Login }
+export { Signup }
