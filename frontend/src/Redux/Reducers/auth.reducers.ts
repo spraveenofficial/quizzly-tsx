@@ -10,7 +10,10 @@ import {
     USER_LOAD_FAILURE,
     USER_LOGOUT
 } from "../Constants/auth.constant"
-import { AuthState, ReducersAction, ReducerState } from "../../Types/global-interfaces";
+import { ReducersAction, ReducerState } from "../../Types/global-interfaces";
+import { AuthState } from "../../Types/type";
+
+
 
 export const login = (state: ReducerState = { loading: false, success: false, message: "", }, action: ReducersAction) => {
     switch (action.type) {

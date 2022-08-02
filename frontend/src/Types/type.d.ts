@@ -1,12 +1,19 @@
-type ReducersAction = {
-    type: string,
-}
-
 type LocationState = {
     from: {
         path: string;
     }
 }
 
+type AuthState = {
+    loading: boolean;
+    isAuthenticated: boolean;
+    user: {
+        name: string;
+        email: string;
+        isAdmin: boolean;
+    } | null;
 
-export { ReducersAction, LocationState };
+}
+
+
+export {  LocationState, AuthState };

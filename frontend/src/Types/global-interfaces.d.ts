@@ -9,19 +9,18 @@ interface ReducerState {
     success: boolean;
     data?: object;
     message?: string;
+    quiz?: object | null;
+}
+
+interface AxiosQuizResponse {
+    data: any;
+    success: boolean;
+    quiz: object | null;
+    message: string;
 }
 
 
-type AuthState = {
-    loading: boolean;
-    isAuthenticated: boolean;
-    user: {
-        name: string;
-        email: string;
-        isAdmin: boolean;
-    } | null;
-
-}
 
 
-export { ReducersAction, ReducerState, AuthState };
+
+export { ReducersAction, ReducerState, AxiosQuizResponse };

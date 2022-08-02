@@ -1,8 +1,75 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useSelector } from 'react-redux';
+import { Container } from '../../Components';
+import { fetchHomePageQuiz } from '../../Redux/Actions';
+import { useTypedDispatch } from '../../Redux/Store';
+import { Loading } from '../Loading';
+import { motion } from 'framer-motion';
+import { categoryItemVariants, categoryVariant } from '../../Helpers/animation';
+import { Helmet } from 'react-helmet-async';
+import { decryptHomeQuiz } from '../../Helpers/decrypt';
+import { CategoryCard } from '../../Components/CategoryCard';
+import "./style.css"
 
 const Home = (): JSX.Element => {
+    const dispatch = useTypedDispatch();
+    const { success, loading, quiz } = useSelector((state: any) => state.homePageQuiz);
+    const [quizs, setQuizs] = React.useState<any>([]);
+
+    useEffect(() => {
+        if (quiz.length === 0) {
+            dispatch(fetchHomePageQuiz());
+        }
+    }, [])
+
+    useEffect(() => {
+        if (success) {
+            decryptHomeQuizs();
+        }
+    }, [success])
+
+
+    const decryptHomeQuizs = async () => {
+        const datas = await decryptHomeQuiz(quiz);
+        setQuizs(datas);
+    };
+    if (loading) {
+        return <Loading />
+    }
+
     return (
-        <div>Home</div>
+        <Container>
+            <motion.div
+                variants={categoryVariant}
+                initial="hidden"
+                animate={"show"}
+            >
+                <Helmet>
+                    <meta charSet="utf-8" />
+                    <title>Home - Quizzly</title>
+                </Helmet>
+                <div className="main_data">
+                    {quizs.map((quiz: any, index: number) => {
+                        return (
+                            <motion.div
+                                className="mobile-item"
+                                variants={categoryItemVariants}
+                                key={index}
+                            >
+                                <CategoryCard
+                                    key={index}
+                                    title={quiz.title}
+                                    questionAmount={quiz.questionsCount}
+                                    thumbnail={quiz.thumbnail}
+                                    marks={quiz.marks}
+                                    onClick={() => { }}
+                                />
+                            </motion.div>
+                        );
+                    })}
+                </div>
+            </motion.div>
+        </Container>
     )
 }
 
