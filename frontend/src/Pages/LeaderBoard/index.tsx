@@ -12,17 +12,28 @@ import LeaderBoardList from "./items"
 
 const LeaderBoard: React.FC = () => {
     const dispatch = useTypedDispatch();
-    const { loading, data }: any = useSelector((state: any) => state.leaderboard);
+
+    type UserTypes = {
+        name: string;
+        totalScore: string;
+        email: string;
+    }
+    interface IUserType {
+        loading: boolean;
+        data: UserTypes[]
+    }
+    const { loading, data }: IUserType = useSelector((state: any) => state.leaderboard);
 
     useEffect(() => {
-        dispatch(fetchLeaderBoard())
+        if (!data.length) {
+            dispatch(fetchLeaderBoard());
+        }
     }, [])
 
 
     if (loading) {
         return <Loading />
     }
-
 
     return (
         <Container>
@@ -42,15 +53,15 @@ const LeaderBoard: React.FC = () => {
                         <TopperIcon />
                     </div>
                     <div className="top-right">
-                        <h2>{data[0].name}</h2>
-                        <p>{data[0].email}</p>
-                        <h3>Score: {data[0].totalScore}</h3>
+                        <h2>{data[0]?.name}</h2>
+                        <p>{data[0]?.email}</p>
+                        <h3>Score: {data[0]?.totalScore}</h3>
                     </div>
                 </div>
                 <div className="leaderboard-items mt-20">
                     <AnimateSharedLayout>
                         <motion.ul layout initial={{ borderRadius: 25 }}>
-                            {data.slice(1).map((item: any, index: number) => (
+                            {data?.slice(1).map((item: UserTypes, index: number) => (
                                 <LeaderBoardList
                                     key={index}
                                     index={index + 2}
