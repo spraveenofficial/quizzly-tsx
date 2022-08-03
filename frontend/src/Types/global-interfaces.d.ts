@@ -30,7 +30,12 @@ interface QuizProps {
 }
 
 
+interface PlayQuiz {
+    selectedOptions: any[];
+    score: number;
+    timeTaken: number;
+}
 
 
 
-export { ReducersAction, ReducerState, AxiosQuizResponse, QuizProps };
+export { ReducersAction, ReducerState, AxiosQuizResponse, QuizProps, PlayQuiz };

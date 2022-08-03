@@ -4,7 +4,11 @@ import {
     HOMEPAGE_LOAD_QUIZ_FAILED,
     LOAD_QUIZ_REQUEST,
     LOAD_QUIZ_SUCCESS,
-    LOAD_QUIZ_FAILED
+    LOAD_QUIZ_FAILED,
+    SCORE_CHANGE,
+    SET_SCORE_NULL,
+    SET_QUIZ_TIMER,
+    SELECT_ANSWER,
 } from "../Constants/quiz.constant"
 import { AxiosQuizResponse } from "../../Types/global-interfaces"
 import axios from "../../interceptor"
@@ -65,3 +69,31 @@ export const fetchEachQuiz = (quizId: string | undefined) => async (dispatch: an
         });
     }
 }
+
+
+export const scoreChange = (score: number) => async (dispatch: any) => {
+    dispatch({
+        type: SCORE_CHANGE,
+        payload: score,
+    });
+};
+
+export const setBacktoNull = () => async (dispatch: any) => {
+    dispatch({
+        type: SET_SCORE_NULL,
+    });
+};
+
+export const SelectAnswer = (id: string, option: string) => async (dispatch: any) => {
+    dispatch({
+        type: SELECT_ANSWER,
+        payload: { id: id, option: option },
+    });
+};
+
+export const SetTimer = (time: number) => async (dispatch: any) => {
+    dispatch({
+        type: SET_QUIZ_TIMER,
+        payload: time,
+    });
+};

@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { Question } from "../../Components";
 import { decryptEachQuiz } from "../../Helpers/decrypt";
 import { fetchEachQuiz } from "../../Redux/Actions";
 import { useTypedDispatch } from "../../Redux/Store";
 import { QuizProps } from "../../Types/global-interfaces";
 import { Loading } from "../Loading";
-import { Terms } from "../Terms";
+import { Terms, Result } from "../index";
+
+
+
 const Quiz: React.FC = () => {
 
     type QuizId = {
@@ -14,7 +18,6 @@ const Quiz: React.FC = () => {
     }
     const { id } = useParams() as QuizId;
 
-    const navigate = useNavigate();
     const dispatch = useTypedDispatch();
 
     const { success, loading, quiz } = useSelector((state: any) => state.quiz);
@@ -44,7 +47,8 @@ const Quiz: React.FC = () => {
 
     const Steps: StepMap | any = {
         1: Terms,
-        2: Terms,
+        2: Question,
+        3: Result,
     }
 
     const [step, setStep] = useState<number>(1);

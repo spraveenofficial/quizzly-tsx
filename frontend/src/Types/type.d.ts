@@ -16,4 +16,12 @@ type AuthState = {
 }
 
 
-export {  LocationState, AuthState };
+type QuestionType = {
+    id: string;
+    question: string;
+    options: string[];
+    correctAnswer: string;
+}
+
+
+export { LocationState, AuthState, QuestionType };

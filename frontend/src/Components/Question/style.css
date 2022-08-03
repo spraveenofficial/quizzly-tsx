@@ -1,0 +1,16 @@
+.score {
+  max-width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0px;
+}
+
+.options-answer button {
+  margin: 10px 0px;
+}
+
+.questionss {
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--white-color);
+  margin-bottom: 10px;
+}
