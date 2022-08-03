@@ -4,14 +4,16 @@ type LocationState = {
     }
 }
 
+type TUser = {
+    name: string;
+    email: string;
+    isAdmin: boolean;
+}
+
 type AuthState = {
     loading: boolean;
     isAuthenticated: boolean;
-    user: {
-        name: string;
-        email: string;
-        isAdmin: boolean;
-    } | null;
+    user: TUser | null;
 
 }
 
@@ -24,4 +26,4 @@ type QuestionType = {
 }
 
 
-export { LocationState, AuthState, QuestionType };
+export { LocationState, AuthState, QuestionType, TUser };
