@@ -37,7 +37,6 @@ const instance = setupInterceptorsTo(axios.create({
 
 
 instance.interceptors.request.use((config: any) => {
-    console.log(config)
     const token = localStorage.getItem("token");
     if (token) {
         config.headers.token = `Bearer ${token}`;
