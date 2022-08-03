@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Navbar } from "./Components";
-import { Login, Signup, Home, Loading } from './Pages';
+import { Login, Signup, Home, Loading, LeaderBoard } from './Pages';
 import { loadUser } from "./Redux/Actions";
 import { useTypedDispatch } from "./Redux/Store";
 import {
@@ -28,9 +28,10 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="leaderboard" element={<LeaderBoard />} />
         <Route element={<PublicRoute />}>
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
+          <Route path="login" element={<Login />} />
+          <Route path="signup" element={<Signup />} />
         </Route>
       </Routes>
     </Router>
