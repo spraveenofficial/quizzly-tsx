@@ -9,9 +9,9 @@ import { loginValidate } from "../../Helpers/validate"
 import { useSelector } from "react-redux"
 import { loadUser, loginUser } from "../../Redux/Actions"
 import { useTypedDispatch } from "../../Redux/Store"
-import { LocationState } from "../../Types/type" 
+import { LocationState } from "../../Types/type"
 
-const Login = (): JSX.Element => {
+const Login: React.FC = () => {
 
     type UserInput = {
         email: string;

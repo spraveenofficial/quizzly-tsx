@@ -10,7 +10,7 @@ import { Loading } from '../Loading'
 import "./style.css"
 import LeaderBoardList from "./items"
 
-const LeaderBoard = (): JSX.Element => {
+const LeaderBoard: React.FC = () => {
     const dispatch = useTypedDispatch();
     const { loading, data }: any = useSelector((state: any) => state.leaderboard);
 

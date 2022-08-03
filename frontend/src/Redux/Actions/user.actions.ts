@@ -21,10 +21,12 @@ export const fetchLeaderBoard = () => async (dispatch: any) => {
             type: LEADERBOARD_REQUEST_FAILED,
             payload: data
         })
-    } catch (error) {
+    } catch (error :any ) {
         dispatch({
             type: LEADERBOARD_REQUEST_FAILED,
-            payload: error
+            payload:  error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
         })
     }
 }

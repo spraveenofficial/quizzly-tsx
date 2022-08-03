@@ -19,8 +19,18 @@ interface AxiosQuizResponse {
     message: string;
 }
 
+interface QuizProps {
+    id?: string | undefined;
+    marks: number;
+    noOfQuestions: number;
+    questions: any;
+    thumbnail: string;
+    timeRequired: number;
+    title: string;
+}
 
 
 
 
-export { ReducersAction, ReducerState, AxiosQuizResponse };
+
+export { ReducersAction, ReducerState, AxiosQuizResponse, QuizProps };

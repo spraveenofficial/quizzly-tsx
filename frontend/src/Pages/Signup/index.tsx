@@ -10,7 +10,7 @@ import { useTypedDispatch } from "../../Redux/Store";
 import { loadUser, registerUser } from "../../Redux/Actions";
 import { LocationState } from "../../Types/type"
 
-const Signup = (): JSX.Element => {
+const Signup : React.FC = () => {
     type UserInput = {
         name: string;
         email: string;

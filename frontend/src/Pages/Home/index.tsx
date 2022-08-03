@@ -10,9 +10,11 @@ import { Helmet } from 'react-helmet-async';
 import { decryptHomeQuiz } from '../../Helpers/decrypt';
 import { CategoryCard } from '../../Components/CategoryCard';
 import "./style.css"
+import { useNavigate } from 'react-router-dom';
 
-const Home = (): JSX.Element => {
+const Home: React.FC = () => {
     const dispatch = useTypedDispatch();
+    const navigate = useNavigate();
     const { success, loading, quiz } = useSelector((state: any) => state.homePageQuiz);
     const [quizs, setQuizs] = React.useState<any>([]);
 
@@ -33,6 +35,11 @@ const Home = (): JSX.Element => {
         const datas = await decryptHomeQuiz(quiz);
         setQuizs(datas);
     };
+
+    const switchQuiz = (path: string) => {
+        navigate(`/quiz/${path}`);
+    };
+
     if (loading) {
         return <Loading />
     }
@@ -62,7 +69,7 @@ const Home = (): JSX.Element => {
                                     questionAmount={quiz.questionsCount}
                                     thumbnail={quiz.thumbnail}
                                     marks={quiz.marks}
-                                    onClick={() => { }}
+                                    onClick={() => switchQuiz(quiz.path)}
                                 />
                             </motion.div>
                         );
