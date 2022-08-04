@@ -9,6 +9,9 @@ import {
     SET_SCORE_NULL,
     SET_QUIZ_TIMER,
     SELECT_ANSWER,
+    ADD_QUIZ_REQUEST,
+    ADD_QUIZ_REQUEST_SUCCESS,
+    ADD_QUIZ_REQUEST_FAILED,
 } from "../Constants/quiz.constant"
 import { AxiosQuizResponse } from "../../Types/global-interfaces"
 import axios from "../../interceptor"
@@ -97,3 +100,31 @@ export const SetTimer = (time: number) => async (dispatch: any) => {
         payload: time,
     });
 };
+
+
+export const addQuiz = (payload: any) => async (dispatch: any) => {
+    try {
+        dispatch({
+            type: ADD_QUIZ_REQUEST,
+        });
+        const { data } = await axios.post<AxiosQuizResponse>("/create-quiz", payload);
+        if (!data.success) {
+            return dispatch({
+                type: ADD_QUIZ_REQUEST_FAILED,
+                payload: data.message
+            })
+        }
+        dispatch({
+            type: ADD_QUIZ_REQUEST_SUCCESS,
+            payload: data.data,
+        });
+    } catch (error: any) {
+        dispatch({
+            type: ADD_QUIZ_REQUEST_FAILED,
+            payload:
+                error.response && error.response.data.message
+                    ? error.response.data.message
+                    : error.message,
+        });
+    }
+}

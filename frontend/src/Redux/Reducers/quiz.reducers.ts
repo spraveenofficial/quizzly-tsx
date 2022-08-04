@@ -9,7 +9,10 @@ import {
     SCORE_CHANGE,
     SET_SCORE_NULL,
     SET_QUIZ_TIMER,
-    SELECT_ANSWER
+    SELECT_ANSWER,
+    ADD_QUIZ_REQUEST,
+    ADD_QUIZ_REQUEST_SUCCESS,
+    ADD_QUIZ_REQUEST_FAILED,
 } from "../Constants/quiz.constant"
 
 export const homePageQuiz = (
@@ -69,3 +72,19 @@ export const playQuiz = (
             return state;
     }
 }
+
+export const addQuiz = (
+    state: ReducerState = { loading: false, success: false, message: "" },
+    action: ReducersAction
+) => {
+    switch (action.type) {
+        case ADD_QUIZ_REQUEST:
+            return { loading: true };
+        case ADD_QUIZ_REQUEST_SUCCESS:
+            return { loading: false, success: true, message: action.payload };
+        case ADD_QUIZ_REQUEST_FAILED:
+            return { loading: false, success: false, message: "" };
+        default:
+            return state;
+    }
+}  

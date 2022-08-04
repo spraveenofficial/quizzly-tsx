@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
 import { auth, login, register } from "./auth.reducers";
-import { homePageQuiz, quiz, playQuiz } from "./quiz.reducers";
+import { homePageQuiz, quiz, playQuiz, addQuiz } from "./quiz.reducers";
 import { leaderBoard, user } from "./user.reducers";
 
 export default combineReducers({
@@ -11,5 +11,6 @@ export default combineReducers({
     quiz,
     leaderboard: leaderBoard,
     playQuiz,
-    user
+    user,
+    addQuiz
 })

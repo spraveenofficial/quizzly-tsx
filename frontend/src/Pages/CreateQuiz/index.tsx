@@ -4,22 +4,26 @@ import { v4 as uuidv4 } from "uuid";
 import { useSelector } from "react-redux";
 import { TUser } from "../../Types/type";
 import React, { useState } from "react";
-import { Button, Container, Input, Loader } from "../../Components";
+import { Button, Container, Input, Loader, Toast } from "../../Components";
 import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
 import animation from "../../Helpers/animation";
+import { addQuiz } from "../../Redux/Actions";
 
 
 const CreateQuiz: React.FC = () => {
+    
     type UserInput = {
         title: string;
         totalMarks: number | string;
         totalTime: number | string;
         thumbnail: string;
     }
-    const loading = false
     const dispatch = useTypedDispatch();
+    const { message, success, loading } = useSelector((state: any) => state.addQuiz)
+
     const optionArray: string[] = ["A", "B", "C", "D"];
+
     const itemTemplate: any = {
         id: uuidv4(),
         title: "",
@@ -29,9 +33,11 @@ const CreateQuiz: React.FC = () => {
         optionD: "",
         answer: "",
     }
+    interface IUser {
+        user: TUser
+    }
 
-    const { user }: TUser | any = useSelector((state: any) => state.auth);
-
+    const { user }: IUser = useSelector((state: any) => state.auth);
 
     const [userInput, setUserInput] = useState<UserInput>({
         title: "",
@@ -50,6 +56,7 @@ const CreateQuiz: React.FC = () => {
         e.preventDefault();
         setQuestionInput([...questionInput, itemTemplate]);
     };
+
     const handleSubmit = () => {
         const questions = questionInput.map((item) => {
             return {
@@ -73,8 +80,9 @@ const CreateQuiz: React.FC = () => {
             noOfQuestions: Number(questionInput.length),
             questions: questions,
         };
-        alert(JSON.stringify(titleThing));
+        dispatch(addQuiz(titleThing));
     }
+
     const onChange = (e: any, index: number) => {
         const updatedItems = questionInput.map((items, i) =>
             index === i
@@ -85,6 +93,7 @@ const CreateQuiz: React.FC = () => {
         );
         setQuestionInput(updatedItems);
     };
+
     return (
         <Container>
             <Helmet>
@@ -188,6 +197,7 @@ const CreateQuiz: React.FC = () => {
                 <Button onClick={handleSubmit} isFull={true}>
                     {loading && <Loader />} Submit
                 </Button>
+                {message && <Toast message={message} success={success} />}
             </motion.div>
         </Container>
     );

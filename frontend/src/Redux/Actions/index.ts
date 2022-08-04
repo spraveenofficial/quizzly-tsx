@@ -4,7 +4,8 @@ export {
     fetchHomePageQuiz, fetchEachQuiz, scoreChange,
     setBacktoNull,
     SelectAnswer,
-    SetTimer
+    SetTimer,
+    addQuiz
 } from "./quiz.actions"
 
 export { fetchLeaderBoard, fetchUserRecentQuiz } from "./user.actions"
