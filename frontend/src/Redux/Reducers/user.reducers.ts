@@ -27,7 +27,7 @@ export const leaderBoard = (
 }
 
 
-export const user = (state: ReducerState = { loading: false, success: false, data: null }, action: ReducersAction) => {
+export const user = (state: ReducerState = { loading: true, success: false, data: null }, action: ReducersAction) => {
     switch (action.type) {
         case USER_RECENT_QUIZ_REQUEST:
             return { ...state, loading: true, success: false, data: null };

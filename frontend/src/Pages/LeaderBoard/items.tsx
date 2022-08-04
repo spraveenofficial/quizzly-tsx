@@ -1,14 +1,14 @@
 import { motion } from "framer-motion";
 
 interface LeaderBoardProps {
-    key: any;
-    index: number;
-    name: string;
-    email: string;
-    totalScore: string;
-    scored?: number;
-    timeTook?: number;
-    thumbnail?: string;
+  key?: any;
+  index?: number;
+  name?: string;
+  email?: string;
+  totalScore?: string;
+  scored?: number | string;
+  timeTook?: number | string;
+  thumbnail?: string;
 }
 
 
@@ -20,7 +20,7 @@ export default function Items({
   timeTook,
   email,
   totalScore,
-} : LeaderBoardProps) {
+}: LeaderBoardProps) {
   return (
     <motion.li className="leaderboard-item-li" initial={{ borderRadius: 10 }}>
       <motion.div className="leaderboard-item-parent">
