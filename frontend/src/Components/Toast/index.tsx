@@ -10,7 +10,6 @@ interface PropsForToast {
 
 const Toast = ({ message, success }: PropsForToast): JSX.Element => {
     const [toast, setToast] = useState<boolean>(true);
-    console.log(success);
 
     setTimeout(() => {
         setToast(false);
