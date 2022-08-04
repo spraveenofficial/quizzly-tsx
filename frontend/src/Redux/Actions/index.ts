@@ -7,4 +7,4 @@ export {
     SetTimer
 } from "./quiz.actions"
 
-export { fetchLeaderBoard } from "./user.actions"
+export { fetchLeaderBoard, fetchUserRecentQuiz } from "./user.actions"

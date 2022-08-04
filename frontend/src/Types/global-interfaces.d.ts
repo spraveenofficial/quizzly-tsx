@@ -7,7 +7,7 @@ interface ReducerState {
     loading: boolean;
     error?: string;
     success: boolean;
-    data?: object;
+    data?: object | null;
     message?: string;
     quiz?: object | null;
 }

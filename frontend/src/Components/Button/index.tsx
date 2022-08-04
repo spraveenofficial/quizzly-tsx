@@ -3,9 +3,9 @@ import "./style.css";
 
 
 interface ButtonProps {
-    isFull: boolean;
+    isFull?: boolean;
     isTrue?: boolean;
-    isError: boolean;
+    isError?: boolean;
     [x: string]: any;
     children?: React.ReactNode;
     disabled?: boolean;
