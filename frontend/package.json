@@ -11,6 +11,7 @@
   "dependencies": {
     "@types/crypto-js": "^4.1.1",
     "@types/react-helmet": "^6.1.5",
+    "@types/uuid": "^8.3.4",
     "axios": "^0.27.2",
     "crypto-js": "^4.1.1",
     "dotenv": "^16.0.1",
