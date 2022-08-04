@@ -1,13 +1,14 @@
 import { useState } from "react";
-import { Profile } from "../Profile";
+import { Profile, CreateQuiz } from "..";
 
 const ProfilePage: React.FC = () => {
     type IProfileSteps = {
-        [key: number]: number;
+        [key: number]: React.FC;
     }
 
     const steps: IProfileSteps | any = {
-        1: Profile
+        1: Profile,
+        2: CreateQuiz
     }
 
     const [activeStep, setActiveStep] = useState<number>(1);
