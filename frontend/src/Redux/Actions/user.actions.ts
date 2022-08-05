@@ -59,4 +59,10 @@ export const fetchUserRecentQuiz = () => async (dispatch: any) => {
                 : error.message
         })
     }
-} 
+}
+
+
+export const updateLeaderBoard = (payload: any) => async () => {
+    const { data } = await axios.post<AxiosQuizResponse>("/completedquiz", payload);
+    return data.data
+}

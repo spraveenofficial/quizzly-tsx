@@ -8,4 +8,4 @@ export {
     addQuiz
 } from "./quiz.actions"
 
-export { fetchLeaderBoard, fetchUserRecentQuiz } from "./user.actions"
+export { fetchLeaderBoard, fetchUserRecentQuiz, updateLeaderBoard } from "./user.actions"

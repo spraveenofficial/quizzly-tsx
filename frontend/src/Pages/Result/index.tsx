@@ -4,6 +4,8 @@ import { QuizProps } from "../../Types/global-interfaces";
 import { motion } from "framer-motion";
 import animation from "../../Helpers/animation";
 import { QuestionType } from "../../Types/type"
+import { useEffect } from "react";
+import { updateLeaderBoard } from "../../Redux/Actions";
 
 interface ResultProps {
     onNext?: () => void;
@@ -16,7 +18,17 @@ const Result: React.FC<ResultProps> = ({ quiz }) => {
         (state: any) => state.playQuiz
     );
 
-    const { marks, questions } = quiz[0];
+    const { marks, questions, id } = quiz[0];
+    const updateData: any = {
+        id,
+        score,
+        timeTaken: 120
+    }
+
+
+    useEffect(() => {
+        updateLeaderBoard(updateData);
+    }, [])
 
     return (
         <Container>
