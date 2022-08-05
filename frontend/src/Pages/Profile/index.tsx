@@ -10,7 +10,6 @@ import "./style.css";
 
 interface IProfileProps {
     onNext: () => void;
-
 }
 
 
@@ -18,6 +17,7 @@ const Profile: React.FC<IProfileProps> = ({ onNext }) => {
     interface IUser {
         user: TUser
     }
+
     const [selectedTab, setSelectedTab] = useState<React.FC | any>(tabs[0]);
     const { user }: IUser = useSelector((state: any) => state.auth);
     const rgx = new RegExp(/(\p{L}{1})\p{L}+/, "gu");

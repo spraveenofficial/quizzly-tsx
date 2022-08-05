@@ -13,10 +13,19 @@ import "./style.css"
 import { useNavigate } from 'react-router-dom';
 
 const Home: React.FC = () => {
+
+    type ThomeQuizs = {
+        title: string,
+        marks: number,
+        questionsCount: number,
+        thumbnail: string,
+        path: string,
+    }
+
     const dispatch = useTypedDispatch();
     const navigate = useNavigate();
     const { success, loading, quiz } = useSelector((state: any) => state.homePageQuiz);
-    const [quizs, setQuizs] = React.useState<any>([]);
+    const [quizs, setQuizs] = React.useState<ThomeQuizs[]>([]);
 
     useEffect(() => {
         if (quiz.length === 0) {
@@ -32,7 +41,7 @@ const Home: React.FC = () => {
 
 
     const decryptHomeQuizs = async () => {
-        const datas = await decryptHomeQuiz(quiz);
+        const datas: ThomeQuizs[] = await decryptHomeQuiz(quiz);
         setQuizs(datas);
     };
 
@@ -56,7 +65,7 @@ const Home: React.FC = () => {
                     <title>Home - Quizzly</title>
                 </Helmet>
                 <div className="main_data">
-                    {quizs.map((quiz: any, index: number) => {
+                    {quizs.map((quiz: ThomeQuizs, index: number) => {
                         return (
                             <motion.div
                                 className="mobile-item"

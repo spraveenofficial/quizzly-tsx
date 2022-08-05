@@ -13,9 +13,7 @@ const ProfilePage: React.FC = () => {
 
     const [activeStep, setActiveStep] = useState<number>(1);
     const Step = steps[activeStep];
-    return (
-        <Step onNext={() => setActiveStep((prev) => prev + 1)} />
-    )
+    return <Step onNext={() => setActiveStep((prev) => prev + 1)} />
 }
 
 

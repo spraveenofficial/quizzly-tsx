@@ -14,12 +14,20 @@ interface ResultProps {
 
 const Result: React.FC<ResultProps> = ({ quiz }) => {
 
+    type ResultData = {
+        id: string | undefined | number;
+        score: number;
+        timeTaken: number;
+    }
+
+
+
     const { score, selectedOptions } = useSelector(
         (state: any) => state.playQuiz
     );
 
     const { marks, questions, id } = quiz[0];
-    const updateData: any = {
+    const updateData: ResultData = {
         id,
         score,
         timeTaken: 120

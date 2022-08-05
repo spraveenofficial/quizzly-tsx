@@ -43,7 +43,6 @@ const Login: React.FC = () => {
         if (isAnyError) return;
         dispatch(loginUser(userInput))
     }
-
     useEffect(() => {
         if (success) {
             dispatch(loadUser());
