@@ -18,6 +18,14 @@ type AuthState = {
 }
 
 
+type TUserAuthCredentials = {
+    email: string,
+    password: string,
+    name?: string,
+    checkbox?: boolean
+}
+
+
 type QuestionType = {
     id: string;
     question: string;
@@ -26,4 +34,4 @@ type QuestionType = {
 }
 
 
-export { LocationState, AuthState, QuestionType, TUser };
+export { LocationState, AuthState, QuestionType, TUser, TUserAuthCredentials };

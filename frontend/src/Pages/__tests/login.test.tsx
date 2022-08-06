@@ -1,10 +1,10 @@
 import * as React from "react";
-import { Login } from "../Login";
+import { ProfilePage } from "../ProfilePage";
 import { render, screen } from "@testing-library/react";
 
 describe('Login', function () {
-    it('Render Login Page', function () {
-        render(<Login />);
+    test('Render Login Page', function () {
+        render(<ProfilePage />);
         const linkElement = screen.getByText(/Login/i);
         expect(linkElement).toBeInTheDocument();
     })

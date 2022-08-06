@@ -1,22 +1,17 @@
+import "./style.css";
 import { Container, Input, Loader, Toast } from "../../Components"
 import { Helmet } from "react-helmet-async"
 import { motion } from "framer-motion"
 import animation from "../../Helpers/animation"
 import React, { useEffect, useState } from "react"
 import { Link, useLocation, useNavigate } from "react-router-dom"
-import "./style.css"
 import { loginValidate } from "../../Helpers/validate"
 import { useSelector } from "react-redux"
 import { loadUser, loginUser } from "../../Redux/Actions"
 import { useTypedDispatch } from "../../Redux/Store"
-import { LocationState } from "../../Types/type"
+import { LocationState, TUserAuthCredentials } from "../../Types/type"
 
 const Login: React.FC = () => {
-
-    type UserInput = {
-        email: string;
-        password: string;
-    }
     interface Errors {
         error: boolean;
         message: string;
@@ -27,7 +22,7 @@ const Login: React.FC = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const { from } = location.state as LocationState || { from: { pathname: "/" } };
-    const [userInput, setUserInput] = useState<UserInput>({ email: "", password: "" });
+    const [userInput, setUserInput] = useState<TUserAuthCredentials>({ email: "", password: "" });
     const { loading, success, message } = useSelector((state: any) => state.login)
     const [errors, setError] = useState<Errors[]>([]);
 

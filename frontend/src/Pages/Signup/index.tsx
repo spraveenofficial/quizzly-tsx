@@ -8,22 +8,16 @@ import { signupValidate } from "../../Helpers/validate";
 import { useSelector } from "react-redux";
 import { useTypedDispatch } from "../../Redux/Store";
 import { loadUser, registerUser } from "../../Redux/Actions";
-import { LocationState } from "../../Types/type"
+import { LocationState, TUserAuthCredentials } from "../../Types/type"
 
-const Signup : React.FC = () => {
-    type UserInput = {
-        name: string;
-        email: string;
-        password: string;
-        checkbox: boolean;
-    }
+const Signup: React.FC = () => {
     interface Errors {
         error: boolean;
         message: string;
         success: boolean;
     }
 
-    const [inputItem, setInputItem] = useState<UserInput>({
+    const [inputItem, setInputItem] = useState<TUserAuthCredentials>({
         name: "",
         email: "",
         password: "",
