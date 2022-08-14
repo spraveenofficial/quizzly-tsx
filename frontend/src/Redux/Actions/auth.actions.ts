@@ -49,6 +49,7 @@ export const loginUser = (payload: UserInput) => async (dispatch: any) => {
             payload: data.message,
         });
         localStorage.setItem("token", data.token)
+        return data;
     } catch (error: any) {
         dispatch({
             type: USER_LOGIN_FAIL,
